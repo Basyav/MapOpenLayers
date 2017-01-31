@@ -44,18 +44,27 @@ window.onload = function() {
     map.addInteraction(modify);
     var drawType;
     var draw;
+    var btnCursor = document.createElement('button');
+    btnCursor.innerHTML = 'C';
+    // btnCursor.addEventListener('click', function() {
+    //     draw = null;
+    // }, false);
     var btnAddMarker = document.createElement('button');
-    btnAddMarker.id = 'Point';
     btnAddMarker.innerHTML = 'M';
-    btnAddMarker.addEventListener('click', handleCreateShape, false);
     var btnAddPolyline = document.createElement('button');
     btnAddPolyline.id = 'LineString';
-    btnAddPolyline.innerHTML = 'P';
+    btnAddPolyline.innerHTML = 'L';
     btnAddPolyline.addEventListener('click', handleCreateShape, false);
+    var btnAddPolygon = document.createElement('button');
+    btnAddPolygon.id = 'Polygon';
+    btnAddPolygon.innerHTML = 'P';
+    btnAddPolygon.addEventListener('click', handleCreateShape, false);
     var shapes = document.createElement('div');
     shapes.className = 'manage-custom ol-unselectable ol-control';
+    shapes.appendChild(btnCursor);
     shapes.appendChild(btnAddMarker);
     shapes.appendChild(btnAddPolyline);
+    shapes.appendChild(btnAddPolygon);
     var shapesControl = new ol.control.Control({element: shapes});
     map.addControl(shapesControl);
 
@@ -74,6 +83,8 @@ window.onload = function() {
         }
         addInter();
     }
+
+
 }
 
 
