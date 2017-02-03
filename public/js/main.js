@@ -36,6 +36,7 @@ window.onload = function() {
     var draw;
     var btnCursor = document.createElement('button');
     btnCursor.innerHTML = 'C';
+    btnCursor.id = 'cursor';
     btnCursor.addEventListener('click', handleCursor, false);
     var btnAddMarker = document.createElement('button');
     btnAddMarker.innerHTML = 'M';
@@ -58,6 +59,24 @@ window.onload = function() {
     var shapesControl = new ol.control.Control({element: shapes});
     map.addControl(shapesControl);
 
+    function createPopupEditForm() {
+        var editPopup = document.getElementById('edit-popup');
+        var labelShapeName = document.createElement('label');
+        labelShapeName.innerHTML = 'Название';
+        editPopup.appendChild(labelShapeName);
+        var inputShapeName = document.createElement('input');
+        inputShapeName.setAttribute('type', 'text');
+        inputShapeName.setAttribute('id', 'shape-name');
+        editPopup.appendChild(inputShapeName);
+        var labelShapeDesc = document.createEventObject('label');
+        labelShapeDesc.innerHTML = 'Описание';
+        editPopup.appendChild(labelShapeDesc)
+        var inputShapeDesc = document.createElement('input');
+        inputShapeDesc.setAttribute('type', 'text');
+        inputShapeDesc.setAttribute('id', 'shape-desc');
+        editPopup.appendChild(inputShapeDesc);
+    }
+
     function addInter() {
         draw = new ol.interaction.Draw({
             features: features,
@@ -74,7 +93,20 @@ window.onload = function() {
 
     function handleCursor() {
         map.removeInteraction(draw);
+
     }
+
+    var popup = document.getElementById('edit-popup');
+    map.on('click', function(evt) {
+        var feature = map.forEachFeatureAtPixel(evt.pixel,
+            function(feature) {
+                return feature;
+            });
+        if (feature) {
+            $('#map').modalBox();
+
+        }
+    });
 }
 
 
