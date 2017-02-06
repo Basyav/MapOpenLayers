@@ -59,54 +59,57 @@ window.onload = function() {
     var shapesControl = new ol.control.Control({element: shapes});
     map.addControl(shapesControl);
 
-    function createPopupEditForm() {
-        var editPopup = document.getElementById('edit-popup');
-        var labelShapeName = document.createElement('label');
-        labelShapeName.innerHTML = 'Название';
-        editPopup.appendChild(labelShapeName);
-        var inputShapeName = document.createElement('input');
-        inputShapeName.setAttribute('type', 'text');
-        inputShapeName.setAttribute('id', 'shape-name');
-        editPopup.appendChild(inputShapeName);
-        var labelShapeDesc = document.createEventObject('label');
-        labelShapeDesc.innerHTML = 'Описание';
-        editPopup.appendChild(labelShapeDesc)
-        var inputShapeDesc = document.createElement('input');
-        inputShapeDesc.setAttribute('type', 'text');
-        inputShapeDesc.setAttribute('id', 'shape-desc');
-        editPopup.appendChild(inputShapeDesc);
-    }
-
     function addInter() {
         draw = new ol.interaction.Draw({
             features: features,
             type: drawType
         });
         map.addInteraction(draw);
+
+        draw.on('drawend', function(event) {
+            var feature = event.feature;
+            feature.name = '';
+            feature.desc = '';
+            // console.log(event.feature);
+            createModalBox(feature);
+            console.log(feature);
+        });
     }
+
+    var selectInteraction = new ol.interaction.Select();
+
+    var modify = new ol.interaction.Modify({
+        features: selectInteraction.getFeatures()
+    });
+
+    selectInteraction.on('select', function(event) {
+        console.log(event.selected);
+    });
 
     function handleCreateShape() {
         drawType = this.id;
         map.removeInteraction(draw);
+        map.removeInteraction(selectInteraction);
+        map.removeInteraction(modify);
         addInter();
     }
 
     function handleCursor() {
         map.removeInteraction(draw);
-
+        map.addInteraction(selectInteraction);
+        map.addInteraction(modify);
     }
 
-    var popup = document.getElementById('edit-popup');
-    map.on('click', function(evt) {
-        var feature = map.forEachFeatureAtPixel(evt.pixel,
-            function(feature) {
-                return feature;
-            });
-        if (feature) {
-            $('#map').modalBox();
-
-        }
-    });
+    // map.on('click', function(evt) {
+    //     var feature = map.forEachFeatureAtPixel(evt.pixel,
+    //         function(feature) {
+    //             return feature;
+    //         });
+    //     if (feature) {
+    //         // $('#map').modalBox();
+    //
+    //     }
+    // });
 }
 
 
