@@ -1,11 +1,10 @@
-function createModalBox(feature) {
+function createModalBox(feature, callback) {
     var state = true;
 
     addBlockPage();
     addPopupBox();
     addStyle();
     $('.modal-box').fadeIn();
-
 
     function addStyle() {
         $('.modal-box').css({
@@ -69,12 +68,15 @@ function createModalBox(feature) {
             type: 'text',
             id: 'shape-desc'
         });
+        var buttons = document.createElement('div');
         var btnOK = document.createElement('button');
         $(btnOK).html('Сохранить');
         var btnCancel = document.createElement('button');
         $(btnCancel).html('Отменить');
-        $(form).append(labelShapeName, inputShapeName, labelShapeDesc, inputShapeDesc, btnOK, btnCancel);
+        $(form).append(labelShapeName, inputShapeName, labelShapeDesc, inputShapeDesc);
+        $(buttons).append(btnOK, btnCancel);
         $(content).append(form);
+        $(content).append(buttons);
         $(popup).append(content);
         $(popup).appendTo('.block-page');
 
@@ -92,6 +94,7 @@ function createModalBox(feature) {
         function closeBox() {
             $('.modal-box').fadeOut().remove();
             $('.block-page').fadeOut().remove();
+            callback(state);
         }
     }
 }
