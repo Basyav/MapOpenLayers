@@ -70,9 +70,10 @@ window.onload = function() {
             var feature = event.feature;
             feature.name = '';
             feature.desc = '';
-            // console.log(event.feature);
-            createModalBox(feature);
-            console.log(feature);
+            var state =  createModalBox(feature);
+            // console.log(features);
+            // featureOverlay.getSource().removeFeature(feature); не работает
+            // console.log(features);
         });
     }
 
@@ -98,18 +99,8 @@ window.onload = function() {
         map.removeInteraction(draw);
         map.addInteraction(selectInteraction);
         map.addInteraction(modify);
+        console.log(features);
     }
-
-    // map.on('click', function(evt) {
-    //     var feature = map.forEachFeatureAtPixel(evt.pixel,
-    //         function(feature) {
-    //             return feature;
-    //         });
-    //     if (feature) {
-    //         // $('#map').modalBox();
-    //
-    //     }
-    // });
 }
 
 
