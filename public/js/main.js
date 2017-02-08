@@ -23,7 +23,7 @@ window.onload = function() {
             anchor: [0.5, 46],
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
-            src: 'https://openlayers.org/en/v3.20.1/examples/data/icon.png'
+            src: './resources/icon.png'
         }))
     });
     var features = new ol.Collection();
