@@ -8,6 +8,11 @@
     width: 1200px;
     height: 700px;
 }
+
+#form {
+    margin-bottom: 70px;
+}
+
 h3 {
     border-bottom: thin solid rgba(25,29,13,0.57);
 }
@@ -26,9 +31,9 @@ label.hidden {
 }
 
 .map {
-    height: 100%;
-    width: auto;
+    height: 600px;
 }
+
 .manage-custom {
     top: 80px;
     left: 0.5em;
