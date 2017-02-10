@@ -25,10 +25,21 @@
                 </div>
             </form>
         </div>
-        <div id="map" class="map"></div>
+        <div id="map" class="map">
+            <div id="google-map" class="map-content"></div>
+            <div id="ol-map" class="map-content"></div>
+        </div>
+        <div>
+            <select id="layer-select">
+                <option value="osm" >OSM</option>
+                <option value="google" selected>GMap</option>
+            </select>
+        </div>
 
     </div>
+
     <!--<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList"></script>-->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAHCdFaBwXq6IoCvsDXykazhXRf_WuQJAk"></script>
     <script src="js/ol-debug.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/modal_box.js"></script>
