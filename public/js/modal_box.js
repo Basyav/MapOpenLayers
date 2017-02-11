@@ -1,3 +1,8 @@
+/**
+ * Call modal popup when a user want to save the shape on the map
+ * @param feature - the shape object
+ * @param callback - determines which the button was pressed
+ */
 function createModalBox(feature, callback) {
     var state = true;
 
@@ -6,6 +11,9 @@ function createModalBox(feature, callback) {
     addStyle();
     $('.modal-box').fadeIn();
 
+    /**
+     * Makes style for elements of popup
+     */
     function addStyle() {
         $('.modal-box').css({
             'position':'absolute',
@@ -42,12 +50,18 @@ function createModalBox(feature, callback) {
         });
     }
 
+    /**
+     * Create block page for popup
+     */
     function addBlockPage() {
         var blockPage = document.createElement('div');
         $(blockPage).attr('class','block-page');
         $(blockPage).appendTo('body');
     }
 
+    /**
+     * Create popup
+     */
     function addPopupBox() {
         var popup = document.createElement('div');
         $(popup).attr('class', 'modal-box');
@@ -68,17 +82,28 @@ function createModalBox(feature, callback) {
             type: 'text',
             id: 'shape-desc'
         });
-        var buttons = document.createElement('div');
         var btnOK = document.createElement('button');
         $(btnOK).html('Сохранить');
+        $(btnOK).attr('type', 'button');
+        $(btnOK).prop('disabled', true);
         var btnCancel = document.createElement('button');
         $(btnCancel).html('Отменить');
-        $(form).append(labelShapeName, inputShapeName, labelShapeDesc, inputShapeDesc);
-        $(buttons).append(btnOK, btnCancel);
+        $(btnCancel).attr('type', 'button');
+        $(form).append(labelShapeName, inputShapeName, labelShapeDesc, inputShapeDesc, btnOK, btnCancel);
         $(content).append(form);
-        $(content).append(buttons);
         $(popup).append(content);
         $(popup).appendTo('.block-page');
+
+        /**
+         * Validates the form
+         */
+        $(form).keyup(function() {
+            $(btnOK).prop('disabled', true);
+            var name = $('#shape-name').val().trim();
+            if (name != '') {
+                $(btnOK).prop('disabled', false);
+            }
+        });
 
         $(btnOK).click(function() {
             feature.name = $('#shape-name').val();
@@ -91,6 +116,9 @@ function createModalBox(feature, callback) {
             closeBox();
         });
 
+        /**
+         * Removes the popup
+         */
         function closeBox() {
             $('.modal-box').fadeOut().remove();
             $('.block-page').fadeOut().remove();

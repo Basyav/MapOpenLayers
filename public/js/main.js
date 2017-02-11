@@ -23,7 +23,7 @@ window.onload = function() {
             anchor: [0.5, 46],
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
-            src: './resources/icon.png'
+            src: './resources/point-map.png'
         }))
     });
     var features = new ol.Collection();
@@ -35,26 +35,51 @@ window.onload = function() {
     var drawType;
     var draw;
     var btnCursor = document.createElement('button');
-    btnCursor.innerHTML = 'C';
     btnCursor.id = 'btn-cursor';
     btnCursor.addEventListener('click', handleModifyShape, false);
+    var imgBtnCursor = document.createElement('img');
+    $(imgBtnCursor).attr({
+        src: './resources/cursor.png',
+        alt: 'C'
+    });
+    btnCursor.appendChild(imgBtnCursor);
     var btnDelete = document.createElement('button');
-    btnDelete.innerHTML = 'D';
     btnDelete. id = 'btn-delete';
     $(btnDelete).prop('disabled', true);
     btnDelete.addEventListener('click', handleDeleteShape, false);
+    var imgBtnDelete = document.createElement('img');
+    $(imgBtnDelete).attr({
+        src: './resources/delete.png',
+        alt: 'R'
+    });
+    btnDelete.appendChild(imgBtnDelete);
     var btnAddMarker = document.createElement('button');
-    btnAddMarker.innerHTML = 'M';
     btnAddMarker.id = 'Point';
     btnAddMarker.addEventListener('click', handleCreateShape, false);
+    var imgBtnAddMarker = document.createElement('img');
+    $(imgBtnAddMarker).attr({
+        src: './resources/point.png',
+        alt: 'M'
+    });
+    btnAddMarker.appendChild(imgBtnAddMarker);
     var btnAddPolyline = document.createElement('button');
     btnAddPolyline.id = 'LineString';
-    btnAddPolyline.innerHTML = 'L';
     btnAddPolyline.addEventListener('click', handleCreateShape, false);
+    var imgBtnAddPolyline = document.createElement('img');
+    $(imgBtnAddPolyline).attr({
+        src: './resources/polyline.png',
+        alt: 'L'
+    });
+    btnAddPolyline.appendChild(imgBtnAddPolyline)
     var btnAddPolygon = document.createElement('button');
     btnAddPolygon.id = 'Polygon';
-    btnAddPolygon.innerHTML = 'P';
     btnAddPolygon.addEventListener('click', handleCreateShape, false);
+    var imgBtnAddPolygon = document.createElement('img');
+    $(imgBtnAddPolygon).attr({
+        src: './resources/polygon.png',
+        alt: 'P'
+    });
+    btnAddPolygon.appendChild(imgBtnAddPolygon);
     var managerShapes = document.createElement('div');
     managerShapes.className = 'manage-custom ol-unselectable ol-control';
     managerShapes.appendChild(btnCursor);
@@ -64,6 +89,21 @@ window.onload = function() {
     managerShapes.appendChild(btnAddPolygon);
     var managerShapesControl = new ol.control.Control({element: managerShapes});
     map.addControl(managerShapesControl);
+
+    $('#btn-save').click(function() {
+        var geojson  = new ol.format.GeoJSON();
+        // console.log(geojson.writeFeaturesObject(features));
+        for (var i = 0; i < features.getLength(); i++) {
+            // console.log(features.item(i).name, features.item(i).getGeometry().getCoordinates());
+            console.log(geojson.writeFeature(features.item(i)));
+        }
+
+
+    });
+
+    $('#btn-load').click(function() {
+
+    })
 
     function addInter() {
         draw = new ol.interaction.Draw({
@@ -114,6 +154,8 @@ window.onload = function() {
         map.removeInteraction(selectInteraction);
         $(btnDelete).prop('disabled', true);
     }
+
+
 }
 
 
