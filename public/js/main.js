@@ -1,16 +1,16 @@
 window.onload = function() {
-    var map = new ol.Map({
-        target: 'map',
-        layers: [
-            new ol.layer.Tile({
-                source: new ol.source.OSM()
-            })
-        ],
-        view: new ol.View({
-            center: ol.proj.fromLonLat([33.53, 44.62]),
-            zoom: 10
-        })
+
+
+    var gDiv = document.getElementById('google-map');
+    var gmap = new google.maps.Map(gDiv,{
+        disableDefaultUI: true,
+        keyboardShortcuts: false,
+        draggable: false,
+        disableDoubleClickZoom: true,
+        scrollwheel: false,
+        streetViewControl: false
     });
+
     var shapeStyle = new ol.style.Style({
         fill: new ol.style.Fill({
             color: 'rgba(255, 255, 255, 0.2)'
@@ -26,12 +26,41 @@ window.onload = function() {
             src: './resources/point-map.png'
         }))
     });
+
     var features = new ol.Collection();
     var featureOverlay = new ol.layer.Vector({
         source: new ol.source.Vector({features: features}),
         style: shapeStyle
     });
+
+    var layerOSM = new ol.layer.Tile({
+        source: new ol.source.OSM()
+    });
+
+    var view = new ol.View({
+        // center: ol.proj.fromLonLat([33.53, 44.62]),
+        // zoom: 2,
+        maxZoom: 21
+    });
+
+    var olDiv = document.getElementById('ol-map');
+
+    var map = new ol.Map({
+        target: olDiv,
+        view: view
+    });
+
+    layerOSM.setMap(map);
     featureOverlay.setMap(map);
+
+    view.on('change:center', function() {
+        var center = ol.proj.transform(view.getCenter(), 'EPSG:3857', 'EPSG:4326');
+        gmap.setCenter(new google.maps.LatLng(center[1], center[0]));
+    });
+    view.on('change:resolution', function() {
+        gmap.setZoom(view.getZoom());
+    });
+
     var drawType;
     var draw;
     var btnCursor = document.createElement('button');
@@ -89,6 +118,34 @@ window.onload = function() {
     managerShapes.appendChild(btnAddPolygon);
     var managerShapesControl = new ol.control.Control({element: managerShapes});
     map.addControl(managerShapesControl);
+    view.setCenter([33.53, 44.62]);
+    view.setZoom(2);
+    layerOSM.setVisible(false);
+    olDiv.parentNode.removeChild(olDiv);
+    gmap.controls[google.maps.ControlPosition.TOP_LEFT].push(olDiv);
+
+    var layerSelect = document.getElementById('layer-select');
+    layerSelect.addEventListener('change', changeLayer);
+
+    function changeLayer() {
+        if (layerSelect.value === 'google') {
+            olDiv.parentNode.appendChild(gDiv);
+            olDiv.parentNode.removeChild(olDiv);
+            gmap.controls[google.maps.ControlPosition.TOP_LEFT].push(olDiv);
+            layerOSM.setVisible(false);
+            map.render();
+        }
+        else {
+            gmap.controls[google.maps.ControlPosition.TOP_LEFT].clear();
+            gDiv.parentNode.appendChild(olDiv);
+            $('#ol-map').css({
+              'position':'relative'
+            });
+            gDiv.parentNode.removeChild(gDiv);
+            layerOSM.setVisible(true);
+            map.render();
+        }
+    }
 
     $('#btn-save').click(function() {
         var geojson  = new ol.format.GeoJSON();
@@ -115,7 +172,6 @@ window.onload = function() {
             var feature = event.feature;
             feature.name = '';
             feature.desc = '';
-            // console.log(feature);
             createModalBox(feature, function(state) {
                 if (state === false) {
                     featureOverlay.getSource().removeFeature(feature);

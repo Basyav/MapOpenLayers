@@ -34,6 +34,11 @@ label.hidden {
     height: 600px;
 }
 
+.map-content {
+    height: 100%;
+    width: 100%;
+}
+
 .manage-custom {
     top: 80px;
     left: 0.5em;
