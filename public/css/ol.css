@@ -239,3 +239,7 @@
 .ol-overviewmap-box {
   border: 2px dotted rgba(0,60,136,0.7);
 }
+
+.gm-style {
+  font-size: 16px;
+}
