@@ -32,6 +32,7 @@ label.hidden {
 
 .map {
     height: 600px;
+    width: 1000px;
 }
 
 .map-content {
@@ -42,4 +43,24 @@ label.hidden {
 .manage-custom {
     top: 80px;
     left: 0.5em;
+}
+
+#layer-select {
+    margin-top: 10px;
+}
+
+#shape-form {
+    position: absolute;
+    width: 180px;
+    height: 300px;
+    left: 1010px;
+    display: none;
+}
+
+#desc-shape {
+    resize: none;
+}
+
+.form-style {
+    margin-bottom: 10px;
 }

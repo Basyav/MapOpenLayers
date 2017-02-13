@@ -1,6 +1,5 @@
 window.onload = function() {
 
-
     var gDiv = document.getElementById('google-map');
     var gmap = new google.maps.Map(gDiv,{
         disableDefaultUI: true,
@@ -38,9 +37,15 @@ window.onload = function() {
     });
 
     var view = new ol.View({
-        // center: ol.proj.fromLonLat([33.53, 44.62]),
-        // zoom: 2,
         maxZoom: 21
+    });
+
+    view.on('change:center', function() {
+        var center = ol.proj.transform(view.getCenter(), 'EPSG:3857', 'EPSG:4326');
+        gmap.setCenter(new google.maps.LatLng(center[1], center[0]));
+    });
+    view.on('change:resolution', function() {
+        gmap.setZoom(view.getZoom());
     });
 
     var olDiv = document.getElementById('ol-map');
@@ -52,17 +57,9 @@ window.onload = function() {
 
     layerOSM.setMap(map);
     featureOverlay.setMap(map);
-
-    view.on('change:center', function() {
-        var center = ol.proj.transform(view.getCenter(), 'EPSG:3857', 'EPSG:4326');
-        gmap.setCenter(new google.maps.LatLng(center[1], center[0]));
-    });
-    view.on('change:resolution', function() {
-        gmap.setZoom(view.getZoom());
-    });
-
     var drawType;
     var draw;
+    var selectedShape;
     var btnCursor = document.createElement('button');
     btnCursor.id = 'btn-cursor';
     btnCursor.addEventListener('click', handleModifyShape, false);
@@ -118,8 +115,8 @@ window.onload = function() {
     managerShapes.appendChild(btnAddPolygon);
     var managerShapesControl = new ol.control.Control({element: managerShapes});
     map.addControl(managerShapesControl);
-    view.setCenter([33.53, 44.62]);
-    view.setZoom(2);
+    view.setCenter(ol.proj.fromLonLat([33.53, 44.62]));
+    view.setZoom(9);
     layerOSM.setVisible(false);
     olDiv.parentNode.removeChild(olDiv);
     gmap.controls[google.maps.ControlPosition.TOP_LEFT].push(olDiv);
@@ -147,20 +144,26 @@ window.onload = function() {
         }
     }
 
-    $('#btn-save').click(function() {
+    $('#btn-save-map').click(function() {
         var geojson  = new ol.format.GeoJSON();
-        // console.log(geojson.writeFeaturesObject(features));
         for (var i = 0; i < features.getLength(); i++) {
-            // console.log(features.item(i).name, features.item(i).getGeometry().getCoordinates());
             console.log(geojson.writeFeature(features.item(i)));
         }
 
 
     });
 
-    $('#btn-load').click(function() {
+    $('#btn-load-map').click(function() {
 
     })
+
+    $('#btn-save-shape').click(function() {
+        selectedShape.setProperties({
+            'name': $('#name-shape').val(),
+            'desc': $('#desc-shape').val()
+        })
+        selectedShape.name = $('#name-shape').val();
+    });
 
     function addInter() {
         draw = new ol.interaction.Draw({
@@ -170,8 +173,6 @@ window.onload = function() {
         map.addInteraction(draw);
         draw.on('drawend', function(event) {
             var feature = event.feature;
-            feature.name = '';
-            feature.desc = '';
             createModalBox(feature, function(state) {
                 if (state === false) {
                     featureOverlay.getSource().removeFeature(feature);
@@ -199,15 +200,25 @@ window.onload = function() {
         });
         map.addInteraction(selectInteraction);
         map.addInteraction(modify);
+
         selectInteraction.on('select', function(event) {
-            $(btnDelete).prop('disabled', false);
-            console.log(event.selected);
+            if (event.selected.length |= 0) {
+                $(btnDelete).prop('disabled', false);
+                selectedShape = event.selected[0];
+                $('#name-shape').val(selectedShape.get('name'));
+                $('#desc-shape').val(selectedShape.get('desc'));
+                $('#shape-form').show();
+            }
+            else {
+                $('#shape-form').hide();
+            }
         });
     }
 
     function handleDeleteShape() {
         featureOverlay.getSource().removeFeature(selectInteraction.getFeatures().item(0));
         map.removeInteraction(selectInteraction);
+        $('#shape-form').hide();
         $(btnDelete).prop('disabled', true);
     }
 

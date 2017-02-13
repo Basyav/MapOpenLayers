@@ -106,8 +106,10 @@ function createModalBox(feature, callback) {
         });
 
         $(btnOK).click(function() {
-            feature.name = $('#shape-name').val();
-            feature.desc = $('#shape-desc').val();
+            feature.setProperties({
+                'name': $('#shape-name').val(),
+                'desc': $('#shape-desc').val()
+            })
             closeBox();
         });
 
