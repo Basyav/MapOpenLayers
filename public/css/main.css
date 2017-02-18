@@ -9,7 +9,7 @@
     height: 700px;
 }
 
-#form {
+#for-map-form {
     margin-bottom: 70px;
 }
 
@@ -49,7 +49,7 @@ label.hidden {
     margin-top: 10px;
 }
 
-#shape-form {
+#for-shape-form {
     position: absolute;
     width: 180px;
     height: 300px;
