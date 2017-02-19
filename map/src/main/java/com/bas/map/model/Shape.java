@@ -1,4 +1,4 @@
-package com.bas.entity;
+package com.bas.map.model;
 
 /**
  * Shapes for map objects

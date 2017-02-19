@@ -1,4 +1,4 @@
-package com.bas.entity;
+package com.bas.map.model;
 
 /**
  * Coordinates of shape
