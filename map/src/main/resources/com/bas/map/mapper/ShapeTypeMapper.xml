@@ -8,7 +8,7 @@
         <id property="id" column="ID" />
         <result property="name" column="NAME" />
     </resultMap>
-    <select id="getShapeTypeById" parameterType="java.lang.Integer" resultType="shapeTypeResult">
+    <select id="getShapeTypeById" parameterType="java.lang.Integer" resultMap="shapeTypeResult">
         SELECT * FROM SHAPE_TYPES WHERE id = #{id}
     </select>
 </mapper>

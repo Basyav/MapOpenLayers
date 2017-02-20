@@ -1,6 +1,5 @@
 package com.bas.map.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,5 +67,14 @@ public class Shape {
     @Override
     public int hashCode() {
         return getId().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Shape{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

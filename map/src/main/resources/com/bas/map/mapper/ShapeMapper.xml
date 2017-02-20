@@ -13,7 +13,7 @@
         <collection property="coordinates" column="ID" ofType="Coordinate"
                     select="com.bas.map.mapper.CoordinateMapper.getCoordinateByShapeId" />
     </resultMap>
-    <select id="getAllShapes" resultType="allShapesResult">
+    <select id="getAllShapes" resultMap="allShapesResult">
         SELECT * FROM SHAPES
     </select>
 </mapper>
