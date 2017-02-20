@@ -1,5 +1,8 @@
 package com.bas.map.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Shapes for map objects
  */
@@ -9,6 +12,7 @@ public class Shape {
     private ShapeType type;
     private String name;
     private String description;
+    private List<Coordinate> coordinates;
 
     public Shape() {
     }
@@ -43,6 +47,14 @@ public class Shape {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Coordinate> getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(List<Coordinate> coordinates) {
+        this.coordinates = coordinates;
     }
 
     @Override

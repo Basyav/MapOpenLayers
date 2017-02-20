@@ -17,6 +17,8 @@
         </environment>
     </environments>
     <mappers>
-
+        <mapper resource="com/bas/map/mapper/ShapeMapper.xml"></mapper>
+        <mapper resource="com/bas/map/mapper/CoordinateMapper.xml"></mapper>
+        <mapper resource="com/bas/map/mapper/ShapeTypeMapper.xml"></mapper>
     </mappers>
 </configuration>

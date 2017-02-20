@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Mapper for Shape
  */
-public interface ShapeMepper {
+public interface ShapeMapper {
 
     /**
      *
