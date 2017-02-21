@@ -66,4 +66,14 @@ public class Coordinate {
     public int hashCode() {
         return getId().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "id=" + id +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", markerNumber=" + markerNumber +
+                '}';
+    }
 }

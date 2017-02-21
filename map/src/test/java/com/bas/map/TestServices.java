@@ -30,6 +30,8 @@ public class TestServices {
         Assert.assertNotNull(shapes);
         for (Shape shape : shapes) {
             System.out.println(shape);
+//            System.out.println(shape.getType());
+//            System.out.println(shape.getCoordinates());
         }
     }
 }

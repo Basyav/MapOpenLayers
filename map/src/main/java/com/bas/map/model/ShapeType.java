@@ -39,4 +39,12 @@ public class ShapeType {
     public int hashCode() {
         return getId().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "ShapeType{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

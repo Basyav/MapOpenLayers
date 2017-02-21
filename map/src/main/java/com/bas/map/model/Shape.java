@@ -73,8 +73,10 @@ public class Shape {
     public String toString() {
         return "Shape{" +
                 "id=" + id +
+                ", type=" + type +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", coordinates=" + coordinates +
                 '}';
     }
 }
