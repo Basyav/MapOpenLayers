@@ -16,4 +16,11 @@
     <select id="getCoordinateByShapeId" parameterType="java.lang.Long" resultMap="coordinateResult">
         SELECT * FROM COORDINATES WHERE ID_SHAPE = #{id}
     </select>
+    <insert id="InsertListOfCoordinates" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO COORDINATES (LONGITUDE, LATITUDE, ID_SHAPE, MARKER_NUMBER)
+        VALUES
+        <foreach collection="list" item="p" separator=",">
+            (#{p.longitude}, #{p.latitude}, #{p.shape.id}, #{p.markerNumber})
+        </foreach>
+    </insert>
 </mapper>

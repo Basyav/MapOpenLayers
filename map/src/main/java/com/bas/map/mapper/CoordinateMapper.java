@@ -22,4 +22,6 @@ public interface CoordinateMapper {
      * @return list of coordinates of shape
      */
     List<Coordinate> getCoordinateByShapeId(Long shapeId);
+
+    void InsertListOfCoordinates(List<Coordinate> coordinates);
 }
