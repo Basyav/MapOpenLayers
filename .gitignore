@@ -2,3 +2,4 @@
 /.idea
 /map/.idea
 /map/target
+/map/tools/*

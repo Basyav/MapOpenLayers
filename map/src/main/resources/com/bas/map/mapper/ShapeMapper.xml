@@ -24,4 +24,7 @@
         INSERT INTO SHAPES (ID_TYPE, NAME, DESCRIPTION)
         VALUES (#{type.id}, #{name}, #{description})
     </insert>
+    <delete id="deleteAllShapes">
+        DELETE FROM SHAPES
+    </delete>
 </mapper>

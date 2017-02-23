@@ -1,7 +1,7 @@
 package com.bas.map.mapper;
 
 import com.bas.map.model.Shape;
-import com.bas.map.model.ShapeType;
+
 
 import java.util.List;
 
@@ -13,11 +13,19 @@ public interface ShapeMapper {
     Shape getShapeById(Long id);
 
     /**
-     * Return all shapes
+     * Returns all shapes from table "SHAPES"
      * @return list of shapes
      */
     List<Shape> getAllShapes();
 
+    /**
+     * Adds shape to table "SHAPES"
+     * @param shape shape
+     */
     void insertShape(Shape shape);
 
+    /**
+     * Clears table "SHAPES"
+     */
+    void deleteAllShapes();
 }

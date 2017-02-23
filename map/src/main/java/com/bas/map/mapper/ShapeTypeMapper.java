@@ -8,9 +8,9 @@ import com.bas.map.model.ShapeType;
 public interface ShapeTypeMapper {
 
     /**
-     * Return type of shape by id
-     * @param id - id shapetype
-     * @return - shapetype
+     * Returns type of shape by id from table "SHAPE_TYPES"
+     * @param id  id type of shape
+     * @return type of shape
      */
     ShapeType getShapeTypeById(Integer id);
 }

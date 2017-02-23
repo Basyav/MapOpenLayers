@@ -77,6 +77,7 @@ window.onload = function() {
 
     $('#btn-save-map').click(function() {
         var geojson  = new ol.format.GeoJSON();
+        // console.log(geojson.writeFeatures(features));
         for (var i = 0; i < features.getLength(); i++) {
             console.log(geojson.writeFeature(features.item(i)));
         }

@@ -33,26 +33,7 @@ public class TestServices {
         Assert.assertNotNull(shapes);
         for (Shape shape : shapes) {
             System.out.println(shape);
-//            System.out.println(shape.getType());
-//            System.out.println(shape.getCoordinates());
         }
-    }
-
-    @Test
-    public void testCreateShape() {
-        ShapeType shapeType = new ShapeType();
-        shapeType.setId(1);
-        shapeType.setName("Point");
-        Shape shape = new Shape();
-        shape.setType(shapeType);
-        shape.setName("point1");
-        shape.setDescription("desc point1");
-        shapeService.createShape(shape);
-        Assert.assertTrue(shape.getId() != 0);
-        Shape createdShape = shapeService.getShapeById(shape.getId());
-        Assert.assertEquals(shape.getType(), createdShape.getType());
-        Assert.assertEquals(shape.getDescription(), createdShape.getDescription());
-        Assert.assertEquals(shape.getName(), createdShape.getName());
     }
 
     @Test
@@ -78,7 +59,16 @@ public class TestServices {
         coordinates.add(coordinate1);
         coordinates.add(coordinate2);
         shape.setCoordinates(coordinates);
-        shapeService.createShapeWithCoordinates(shape);
+        shapeService.createShape(shape);
         Assert.assertTrue(shape.getId() != 0);
+        Shape createdShape = shapeService.getShapeById(shape.getId());
+        Assert.assertEquals(shape, createdShape);
+    }
+
+    @Test
+    public void testDeleteAllRecords() {
+        shapeService.deleteAllShapes();
+        List<Shape> shapes = shapeService.getAllShapes();
+        Assert.assertTrue(shapes.isEmpty());
     }
 }

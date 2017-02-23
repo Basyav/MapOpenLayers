@@ -23,4 +23,7 @@
             (#{p.longitude}, #{p.latitude}, #{p.shape.id}, #{p.markerNumber})
         </foreach>
     </insert>
+    <delete id="deleteAllCoordinates">
+        DELETE FROM COORDINATES
+    </delete>
 </mapper>

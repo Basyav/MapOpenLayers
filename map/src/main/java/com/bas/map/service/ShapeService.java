@@ -2,16 +2,19 @@ package com.bas.map.service;
 
 import com.bas.map.mapper.CoordinateMapper;
 import com.bas.map.mapper.ShapeMapper;
-import com.bas.map.model.Coordinate;
 import com.bas.map.model.Shape;
 import com.bas.map.util.MyBatisUtil;
-import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
 public class ShapeService {
 
+    /**
+     * Returns shape of map by ID
+     * @param id id shape
+     * @return shape
+     */
     public Shape getShapeById(Long id) {
         SqlSession session = MyBatisUtil.getSessionFactory().openSession();
         try {
@@ -24,7 +27,7 @@ public class ShapeService {
     }
 
     /**
-     * Return all shapes of map
+     * Returns all shapes of map
      * @return list of shapes
      */
     public List<Shape> getAllShapes() {
@@ -38,25 +41,36 @@ public class ShapeService {
         }
     }
 
+    /**
+     * Create a shape of map with their coordinates and their type
+     * @param shape a shape of map
+     */
     public void createShape(Shape shape) {
-        SqlSession session = MyBatisUtil.getSessionFactory().openSession();
+        SqlSession session = MyBatisUtil.getSessionFactory().openSession(true);
         try {
             ShapeMapper shapeMapper = session.getMapper(ShapeMapper.class);
+            CoordinateMapper coordinateMapper = session.getMapper(CoordinateMapper.class);
+            coordinateMapper.deleteAllCoordinates();
+            shapeMapper.deleteAllShapes();
             shapeMapper.insertShape(shape);
-            session.commit();
+            coordinateMapper.InsertListOfCoordinates(shape.getCoordinates());
         }
         finally {
             session.close();
         }
     }
 
-    public void createShapeWithCoordinates(Shape shape) {
+    /**
+     * Test method
+     * Clear tables "COORDINATES" and "SHAPES"
+     */
+    public void deleteAllShapes() {
         SqlSession session = MyBatisUtil.getSessionFactory().openSession(true);
         try {
             ShapeMapper shapeMapper = session.getMapper(ShapeMapper.class);
-            shapeMapper.insertShape(shape);
             CoordinateMapper coordinateMapper = session.getMapper(CoordinateMapper.class);
-            coordinateMapper.InsertListOfCoordinates(shape.getCoordinates());
+            coordinateMapper.deleteAllCoordinates();
+            shapeMapper.deleteAllShapes();
         }
         finally {
             session.close();
