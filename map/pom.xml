@@ -7,32 +7,59 @@
   <version>1.0-SNAPSHOT</version>
   <name>Map</name>
   <url>http://maven.apache.org</url>
+
+  <properties>
+    <mysql.version>5.1.39</mysql.version>
+    <jackson.version>2.8.4</jackson.version>
+    <servlet.version>3.1.0</servlet.version>
+    <mybatis.version>3.4.1</mybatis.version>
+    <log4j.version>1.2.17</log4j.version>
+    <junit.version>4.12</junit.version>
+    <geojson-pojo.version>1.1.0</geojson-pojo.version>
+    <java.version>1.8</java.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.39</version>
+      <version>${mysql.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
+      <version>${servlet.version}</version>
     </dependency>
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.4.1</version>
+      <version>${mybatis.version}</version>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
+      <version>${log4j.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.geojson</groupId>
+      <artifactId>geojson-pojo</artifactId>
+      <version>${geojson-pojo.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -43,8 +70,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.6.0</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
