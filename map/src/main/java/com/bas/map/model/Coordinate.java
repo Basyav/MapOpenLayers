@@ -6,8 +6,8 @@ package com.bas.map.model;
 public class Coordinate {
 
     private Long id;
-    private Float longitude;
-    private Float latitude;
+    private Double longitude;
+    private Double latitude;
     private Shape shape;
     private Integer markerNumber;
 
@@ -22,19 +22,19 @@ public class Coordinate {
         this.id = id;
     }
 
-    public Float getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public Float getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
