@@ -11,6 +11,11 @@ public class ShapeType {
     public ShapeType() {
     }
 
+    public ShapeType(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

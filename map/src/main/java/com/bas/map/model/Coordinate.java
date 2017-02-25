@@ -14,6 +14,13 @@ public class Coordinate {
     public Coordinate() {
     }
 
+    public Coordinate(Double longitude, Double latitude, Shape shape, Integer markerNumber) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.shape = shape;
+        this.markerNumber = markerNumber;
+    }
+
     public Long getId() {
         return id;
     }
