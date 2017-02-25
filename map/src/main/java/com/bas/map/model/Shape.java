@@ -16,6 +16,13 @@ public class Shape {
     public Shape() {
     }
 
+    public Shape(ShapeType type, String name, String description, List<Coordinate> coordinates) {
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.coordinates = coordinates;
+    }
+
     public Long getId() {
         return id;
     }
