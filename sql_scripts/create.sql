@@ -13,8 +13,8 @@ foreign key (ID_TYPE) references SHAPE_TYPES(ID));
 
 create table COORDINATES(
 ID bigint AUTO_INCREMENT,
-LONGITUDE float,
-LATITUDE float,
+LONGITUDE double,
+LATITUDE double,
 ID_SHAPE bigint,
 MARKER_NUMBER int,
 primary key (ID),
