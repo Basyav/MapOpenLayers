@@ -10,6 +10,7 @@ import org.geojson.geometry.Polygon;
 import org.geojson.object.Feature;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.Serializable;
@@ -26,8 +27,8 @@ public class TestShapeFeatureMapper {
     private static Feature featurePolygon;
     private static List<Feature> features;
 
-    @Before
-    public void setup() {
+    @BeforeClass
+    public static void setup() {
         ShapeType shapeTypePoint = new ShapeType(1, "Point");
         shapePoint = new Shape(shapeTypePoint, "point", "point desc", null);
         Coordinate coordinatePoint = new Coordinate(11.11, -11.11, shapePoint, 1);
@@ -94,12 +95,12 @@ public class TestShapeFeatureMapper {
     @Test
     public void testShapeToFeature() {
         Feature testFeaturePoint = ShapeFeatureMapper.shapeToFeature(shapePoint);
+        Feature testFeatureLine = ShapeFeatureMapper.shapeToFeature(shapeLine);
+        Feature testFeaturePolygon = ShapeFeatureMapper.shapeToFeature(shapePolygon);
         Assert.assertNotNull(testFeaturePoint);
         Assert.assertEquals(featurePoint.getProperties().get("name"), testFeaturePoint.getProperties().get("name"));
-        Feature testFeatureLine = ShapeFeatureMapper.shapeToFeature(shapeLine);
         Assert.assertNotNull(testFeatureLine);
         Assert.assertEquals(featureLine.getProperties().get("name"), testFeatureLine.getProperties().get("name"));
-        Feature testFeaturePolygon = ShapeFeatureMapper.shapeToFeature(shapePolygon);
         Assert.assertNotNull(testFeaturePolygon);
         Assert.assertEquals(featurePolygon.getProperties().get("name"), testFeaturePolygon.getProperties().get("name"));
         List<Feature> testFeatures = ShapeFeatureMapper.shapesToFeatures(shapes);
@@ -107,15 +108,15 @@ public class TestShapeFeatureMapper {
     }
 
     @Test
-    public void testFutureToShape() {
+    public  void testFutureToShape() {
         Shape testShapePoint = ShapeFeatureMapper.featureToShape(featurePoint);
+        Shape testShapeLine = ShapeFeatureMapper.featureToShape(featureLine);
+        Shape testShapePolygon = ShapeFeatureMapper.featureToShape(featurePolygon);
         Assert.assertNotNull(testShapePoint);
         Assert.assertEquals(shapePoint.getType(), testShapePoint.getType());
         Assert.assertEquals(shapePoint.getCoordinates().get(0).getMarkerNumber(), testShapePoint.getCoordinates().get(0).getMarkerNumber());
-        Shape testShapeLine = ShapeFeatureMapper.featureToShape(featureLine);
         Assert.assertNotNull(testShapeLine);
         Assert.assertEquals(shapeLine.getDescription(), testShapeLine.getDescription());
-        Shape testShapePolygon = ShapeFeatureMapper.featureToShape(featurePolygon);
         Assert.assertNotNull(testShapePolygon);
         Assert.assertEquals(shapePolygon.getName(), testShapePolygon.getName());
         List<Shape> testShapes = ShapeFeatureMapper.featuresToShapes(features);

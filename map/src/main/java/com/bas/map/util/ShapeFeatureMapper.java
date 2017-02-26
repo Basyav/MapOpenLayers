@@ -21,7 +21,6 @@ import java.util.Map;
  */
 public class ShapeFeatureMapper {
 
-    private static Map<String, Serializable> propFeature = new HashMap<>();
     private static final String FEATURE_NAME = "name";
     private static final String FEATURE_DESCRIPTION = "description";
     private static TypeOfShape typeOfShape;
@@ -34,6 +33,7 @@ public class ShapeFeatureMapper {
     public static Feature shapeToFeature(Shape shape) {
         Feature feature = new Feature();
         Geometry geometry = null;
+        Map<String, Serializable> propFeature = new HashMap<>();
         propFeature.put(FEATURE_NAME, shape.getName());
         propFeature.put(FEATURE_DESCRIPTION, shape.getDescription());
         feature.setProperties(propFeature);
@@ -92,9 +92,8 @@ public class ShapeFeatureMapper {
         Shape shape = new Shape();
         ShapeType shapeType = new ShapeType();
         List<Coordinate> coordinates = null;
-        propFeature.putAll(feature.getProperties());
-        shape.setName((String)propFeature.get(FEATURE_NAME));
-        shape.setDescription((String)propFeature.get(FEATURE_DESCRIPTION));
+        shape.setName((String)feature.getProperties().get(FEATURE_NAME));
+        shape.setDescription((String)feature.getProperties().get(FEATURE_DESCRIPTION));
         Geometry geometry = feature.getGeometry();
         typeOfShape = TypeOfShape.valueOf(geometry.getType().toUpperCase());
         shapeType.setName(geometry.getType());
