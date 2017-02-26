@@ -50,10 +50,25 @@ public class ShapeService {
         try {
             ShapeMapper shapeMapper = session.getMapper(ShapeMapper.class);
             CoordinateMapper coordinateMapper = session.getMapper(CoordinateMapper.class);
-            coordinateMapper.deleteAllCoordinates();
-            shapeMapper.deleteAllShapes();
             shapeMapper.insertShape(shape);
             coordinateMapper.InsertListOfCoordinates(shape.getCoordinates());
+        }
+        finally {
+            session.close();
+        }
+    }
+
+    public void createAllShapes(List<Shape> shapes) {
+        SqlSession session = MyBatisUtil.getSessionFactory().openSession(true);
+        try {
+            ShapeMapper shapeMapper = session.getMapper(ShapeMapper.class);
+            CoordinateMapper coordinateMapper = session.getMapper(CoordinateMapper.class);
+            coordinateMapper.deleteAllCoordinates();
+            shapeMapper.deleteAllShapes();
+            for (Shape shape: shapes) {
+                shapeMapper.insertShape(shape);
+                coordinateMapper.InsertListOfCoordinates(shape.getCoordinates());
+            }
         }
         finally {
             session.close();
