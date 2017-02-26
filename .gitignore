@@ -3,3 +3,5 @@
 /map/.idea
 /map/target
 /map/tools/*
+/external source/GeoJSON-POJO-master/.idea
+/external source/GeoJSON-POJO-master/target
