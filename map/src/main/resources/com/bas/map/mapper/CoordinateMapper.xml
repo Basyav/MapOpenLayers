@@ -14,7 +14,9 @@
         WHERE ID = #{id}
     </select>
     <select id="getCoordinateByShapeId" parameterType="java.lang.Long" resultMap="coordinateResult">
-        SELECT * FROM COORDINATES WHERE ID_SHAPE = #{id}
+        SELECT * FROM COORDINATES
+        WHERE ID_SHAPE = #{id}
+        ORDER BY MARKER_NUMBER
     </select>
     <insert id="InsertListOfCoordinates" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO COORDINATES (LONGITUDE, LATITUDE, ID_SHAPE, MARKER_NUMBER)

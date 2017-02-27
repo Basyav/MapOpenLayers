@@ -37,5 +37,12 @@ public class SaveServlet extends HttpServlet {
         }
         FeatureService featureService = new FeatureService();
         featureService.createAllFeaturesToDB(featureCollection.getFeatures());
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            response.getWriter().write("SUCCESS");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

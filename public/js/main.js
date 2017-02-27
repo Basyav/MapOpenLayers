@@ -88,8 +88,8 @@ window.onload = function() {
                 type: 'POST',
                 contentType: 'application/json',
                 url:  'http://localhost/api/map/SaveServlet',
-                dataType: 'json',
-                data: arrayOfFeatures,
+                dataType: 'text',
+                data: geojson.writeFeatures(arrayOfFeatures),
                 success: function () {
                     alert("Фигуры сохранены в базе");
                 },
@@ -236,6 +236,7 @@ window.onload = function() {
      * Draws shapes on the map
      */
     function handleCreateShape() {
+        $('#for-shape-form').hide();
         drawType = this.id;
         map.removeInteraction(draw);
         map.removeInteraction(selectInteraction);
@@ -265,6 +266,9 @@ window.onload = function() {
      */
     function handleModifyShape() {
         map.removeInteraction(draw);
+        map.removeInteraction(selectInteraction);
+        map.removeInteraction(modify);
+        $('#for-shape-form').hide();
         selectInteraction = new ol.interaction.Select();
         modify = new ol.interaction.Modify({
             features: selectInteraction.getFeatures()
