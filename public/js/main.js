@@ -74,25 +74,62 @@ window.onload = function() {
     var layerSelect = document.getElementById('layer-select');
     layerSelect.addEventListener('change', changeLayer);
 
+    var arrayOfFeatures;
+    var geojson  = new ol.format.GeoJSON();
 
+    /**
+     * Event handler click for button "Сохранить"
+     */
     $('#btn-save-map').click(function() {
-        var geojson  = new ol.format.GeoJSON();
-        // console.log(geojson.writeFeatures(features));
-        for (var i = 0; i < features.getLength(); i++) {
-            console.log(geojson.writeFeature(features.item(i)));
+        if (features.getLength() !== 0) {
+            arrayOfFeatures = features.getArray();
+            console.log(geojson.writeFeatures(arrayOfFeatures));
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                url:  'http://localhost/api/map/SaveServlet',
+                dataType: 'json',
+                data: arrayOfFeatures,
+                success: function () {
+                    alert("Фигуры сохранены в базе");
+                },
+                error: function () {
+                    alert("Ошибка");
+                }
+            })
         }
-
-
     });
 
+    /**
+     * Event handler click for button "Загрузить"
+     */
     $('#btn-load-map').click(function() {
-
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            url:  'http://localhost/api/map/LoadServlet',
+            dataType: 'json',
+            success: function (data) {
+                arrayOfFeatures = geojson.readFeatures(data);
+                console.log(arrayOfFeatures);
+                features.clear();
+                $.each(arrayOfFeatures, function (index, value) {
+                    features.push(value);
+                });
+            },
+            error: function () {
+                alert("Ошибка");
+            }
+        })
     });
 
+    /**
+     * Event handler click for button "Сохранить" at edit form
+     */
     $('#btn-save-shape').click(function() {
         selectedShape.setProperties({
             'name': $('#name-shape').val(),
-            'desc': $('#desc-shape').val()
+            'description': $('#desc-shape').val()
         });
         selectedShape.name = $('#name-shape').val();
     });
@@ -243,7 +280,7 @@ window.onload = function() {
                 $('#btn-delete').prop('disabled', false);
                 selectedShape = event.selected[0];
                 $('#name-shape').val(selectedShape.get('name'));
-                $('#desc-shape').val(selectedShape.get('desc'));
+                $('#desc-shape').val(selectedShape.get('description'));
                 $('#for-shape-form').show();
             }
             else {
