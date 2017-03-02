@@ -86,9 +86,8 @@ window.onload = function() {
             console.log(geojson.writeFeatures(arrayOfFeatures));
             $.ajax({
                 type: 'POST',
-
-                contentType: 'application/json',
-                url:  'http://localhost/api/map/MainServlet',
+                contentType: 'application/json, charset=UTF-8',
+                url:  'http://localhost/api/MainServlet',
                 dataType: 'text',
                 data: geojson.writeFeatures(arrayOfFeatures),
                 success: function () {
@@ -108,7 +107,7 @@ window.onload = function() {
         $.ajax({
             type: 'GET',
             contentType: 'application/json',
-            url:  'http://localhost/api/map/MainServlet',
+            url:  'http://localhost/api/MainServlet',
             dataType: 'json',
             success: function (data) {
                 arrayOfFeatures = geojson.readFeatures(data);
